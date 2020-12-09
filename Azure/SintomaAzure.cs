@@ -31,6 +31,74 @@ namespace AppiEnfermedades.Azure
 
         }
 
+        public static int AgregarSintoma(Sintoma sintoma)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Insert into Sintoma(nombre_sintoma , detalle_sintoma) values (@nombre_sintoma , @detalle_sintoma)";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_sintoma", sintoma.NombreSintoma);
+                sqlCommand.Parameters.AddWithValue("@detalle_sintoma", sintoma.DetalleSintoma);
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+        public static int ActualizarSintoma(Sintoma sintoma)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "UPDATE Sintoma SET nombre_sintoma = @nombre_sintoma , detalle_sintoma = @detalle_sintoma where id_sintoma= @id_sintoma";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_sintoma", sintoma.NombreSintoma);
+                sqlCommand.Parameters.AddWithValue("@id_sintoma", sintoma.IdSintoma);
+                sqlCommand.Parameters.AddWithValue("@id_detalle_sintoma", sintoma.DetalleSintoma);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+
+
 
         public static SqlCommand AbrirConexionSqlSintoma(SqlConnection sqlConnection)
         {

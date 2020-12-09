@@ -30,6 +30,9 @@ namespace AppiEnfermedades.Azure
 
         }
 
+        
+
+
 
         public static SqlCommand AbrirConexionSqlDetalle(SqlConnection sqlConnection)
         {

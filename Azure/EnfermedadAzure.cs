@@ -30,6 +30,141 @@ namespace AppiEnfermedades.Azure
 
         }
 
+        public static int AgregarEnfermedad(Enfermedad enfermedad)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Insert into Enfermedad(nombre_enfermedad) values (@nombre_enfermedad)";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_enfermedad", enfermedad.NombreEnfermedad);
+           
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+
+        public static int ActualizarEnfermedad(Enfermedad enfermedad)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "UPDATE Enfermedad SET nombre_enfermedad = @nombre_enfermedad where id_enfermedad = @id_enfermedad" ;
+
+                sqlCommand.Parameters.AddWithValue("@nombre_enfermedad", enfermedad.NombreEnfermedad);
+                sqlCommand.Parameters.AddWithValue("@id_enfermedad", enfermedad.IdEnfermedad);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+        public static int AgregarEnfermedadporNombre(string enfermedad)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Insert into Enfermedad(nombre_enfermedad) values (@nombre_enfermedad)";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_enfermedad", enfermedad);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+        public static int EliminarEnfermedad(string nombre_enfermedad)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Delete from Enfermedad where nombre_enfermedad = @nombre_enfermedad";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_enfermedad", nombre_enfermedad);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+
+
+
+
+
 
         public static SqlCommand AbrirConexionSqlEnfermedad(SqlConnection sqlConnection)
         {

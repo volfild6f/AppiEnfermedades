@@ -31,6 +31,40 @@ namespace AppiEnfermedades.Azure
         }
 
 
+
+        //Agregar Categoria
+
+            public static int AgregarCategoria(Categoria categoria)
+             {
+                    int resultado = 0;
+
+                    using(SqlConnection sqlConnection = new SqlConnection(connectionString) )
+                    {
+                        SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                        sqlCommand.CommandText = "Insert into Categoria(nombre_categoria) values (@nombre_categoria)";
+
+                       sqlCommand.Parameters.AddWithValue("@nombre_categoria", categoria.NombreCategoria);
+
+
+                        try
+                        {
+                            sqlConnection.Open();
+                    
+                            resultado= sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine(ex.Message);
+                        }
+
+                         return resultado;
+            }
+
+            }
+
         public static SqlCommand AbrirConexionSqlCategoria(SqlConnection sqlConnection)
         {
             SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
