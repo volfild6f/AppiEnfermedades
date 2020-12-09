@@ -31,6 +31,40 @@ namespace AppiEnfermedades.Azure
 
         }
 
+
+        public static int AgregarSintomaporNombre(string nombre_sintoma , string descripcion )
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Insert into Sintoma(nombre_sintoma , detalle sintoma ) values (@nombre_sintoma , @detalle_sintoma )";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_sintoma", nombre_sintoma);
+                sqlCommand.Parameters.AddWithValue("@detalle_sintoma", descripcion);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
         public static int AgregarSintoma(Sintoma sintoma)
         {
             int resultado = 0;
