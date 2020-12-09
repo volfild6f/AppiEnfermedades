@@ -65,6 +65,69 @@ namespace AppiEnfermedades.Azure
 
             }
 
+        public static int ActualizarCategoria(Categoria categoria)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "UPDATE Categoria SET nombre_categoria = @nombre_categoria where id_categoria = @id_categoria";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_categoria", categoria.NombreCategoria);
+                sqlCommand.Parameters.AddWithValue("@id_categoria", categoria.IdCategoria);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+        public static int EliminarCategoria(string nombre_categoria)
+        {
+            int resultado = 0;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Delete from Categoria where nombre_categoria = @nombre_categoria";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_categoria", nombre_categoria);
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
         public static SqlCommand AbrirConexionSqlCategoria(SqlConnection sqlConnection)
         {
             SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);

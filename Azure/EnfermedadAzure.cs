@@ -139,8 +139,6 @@ namespace AppiEnfermedades.Azure
 
                 sqlCommand.Parameters.AddWithValue("@nombre_enfermedad", nombre_enfermedad);
 
-
-
                 try
                 {
                     sqlConnection.Open();

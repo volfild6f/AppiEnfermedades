@@ -74,7 +74,7 @@ namespace AppiEnfermedades.Azure
 
                 sqlCommand.Parameters.AddWithValue("@nombre_sintoma", sintoma.NombreSintoma);
                 sqlCommand.Parameters.AddWithValue("@id_sintoma", sintoma.IdSintoma);
-                sqlCommand.Parameters.AddWithValue("@id_detalle_sintoma", sintoma.DetalleSintoma);
+                sqlCommand.Parameters.AddWithValue("@detalle_sintoma", sintoma.DetalleSintoma);
 
 
 
@@ -97,7 +97,37 @@ namespace AppiEnfermedades.Azure
 
         }
 
+        public static int EliminarSintoma (string nombre_sintoma)
+        {
+            int resultado = 0;
 
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Delete from Sintoma where nombre_sintoma = @nombre_sintoma";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_sintoma", nombre_sintoma);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
 
 
         public static SqlCommand AbrirConexionSqlSintoma(SqlConnection sqlConnection)

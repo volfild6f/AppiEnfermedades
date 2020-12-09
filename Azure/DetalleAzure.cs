@@ -30,9 +30,100 @@ namespace AppiEnfermedades.Azure
 
         }
 
-        
+        public static int AgregarDetalle(DetalleEnfermedad detalle)
+        {
+            int resultado = 1;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Insert into Detalle(id_detalle) values (@id_detalle)";
+
+                sqlCommand.Parameters.AddWithValue("@id_detalle", detalle.IdDetalleEnfermedad);
 
 
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+
+        public static int EliminarDetalle(int id_detalle)
+        {
+            int resultado = 1;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Delete from Detalle where id_detalle_enfermedad = @id_detalle";
+
+                sqlCommand.Parameters.AddWithValue("@id_detalle", id_detalle);
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
+
+
+        public static int ActualizarDetalle(DetalleEnfermedad detalle)
+        {
+            int resultado = 1;
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "UPDATE Categoria SET id_detalle = @id_detalle where id_detalle = @id_detalle";
+
+                sqlCommand.Parameters.AddWithValue("@id_detalle", detalle.IdDetalleEnfermedad);
+
+
+
+                try
+                {
+                    sqlConnection.Open();
+
+                    resultado = sqlCommand.ExecuteNonQuery();
+
+                    sqlConnection.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+
+                return resultado;
+            }
+
+        }
 
         public static SqlCommand AbrirConexionSqlDetalle(SqlConnection sqlConnection)
         {
